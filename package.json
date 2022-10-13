@@ -1,0 +1,21 @@
+{
+  "name": "pinia-vuejs-todo-app",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --port 4173"
+  },
+  "dependencies": {
+    "gsap": "^3.11.3",
+    "material-icons": "^1.12.0",
+    "pinia": "^2.0.22",
+    "vue": "^3.2.38",
+    "vue-uuid": "^3.0.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^3.0.3",
+    "vite": "^3.0.9"
+  },
+  "type": "module"
+}

@@ -1,0 +1,22 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "title": "make lunch",
+      "isFav": true,
+      "createdAt": 1665653439130
+    },
+    {
+      "id": 2,
+      "title": "buy milk",
+      "isFav": true,
+      "createdAt": 1665653449130
+    },
+    {
+      "id": 3,
+      "title": "walk with the dog",
+      "isFav": true,
+      "createdAt": 1665653419130
+    }
+  ]
+}
