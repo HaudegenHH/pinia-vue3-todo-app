@@ -25,15 +25,58 @@ export const useTaskStore = defineStore('piniaTaskStore', {
       this.tasks = data;
       this.isLoading = false;
     },
-    addTask(task) {
-      this.tasks.push(task);
+    async addTask(task) {
+      const res = await fetch('http://localhost:3000/tasks', {
+        method: 'POST',
+        body: JSON.stringify(task),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      if (res.ok) {
+        console.log('successfully added');
+        this.tasks.push(task);
+      } else {
+        console.log(res.error);
+      }
     },
-    deleteTask(id) {
-      this.tasks = this.tasks.filter((task) => task.id !== id);
+    async deleteTask(id) {
+      const res = await fetch(`http://localhost:3000/tasks/${id}`, {
+        method: 'DELETE',
+      });
+      if (res.ok) {
+        console.log('successfully deleted');
+        this.tasks = this.tasks.filter((task) => task.id !== id);
+      } else {
+        console.log(res.error);
+      }
     },
-    toggleFav(id) {
+    async toggleFav(id) {
       const task = this.tasks.find((task) => task.id == id);
       task.isFav = !task.isFav;
+
+      const res = await fetch(`http://localhost:3000/tasks/${id}`, {
+        method: 'PATCH',
+        body: JSON.stringify({ isFav: task.isFav }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      // or via put request
+      // const res = await fetch(`http://localhost:3000/tasks/${id}`, {
+      //   method: 'PUT',
+      //   body: JSON.stringify(task),
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      // });
+
+      if (res.ok) {
+        console.log('successfully updated');
+      } else {
+        console.log(res.error);
+      }
     },
   },
 });
