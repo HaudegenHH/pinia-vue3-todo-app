@@ -34,13 +34,10 @@
           v-if="filter === 'all'"
         >
           <p>
-            You have {{ taskStore.totalCount }} task{{
-              taskStore.totalCount > 1 ? 's' : ''
-            }}
-            total
+            You have {{ totalCount }} task{{ totalCount > 1 ? 's' : '' }} total
           </p>
           <div
-            v-for="(task, index) in taskStore.allTasks"
+            v-for="(task, index) in allTasks"
             :key="task.id"
             :data-index="index"
           >
@@ -62,16 +59,14 @@
       appear
       v-if="filter === 'favs'"
     >
-      <p>
-        You have {{ taskStore.favCount }} fav task{{
-          taskStore.favCount == 1 ? '' : 's'
-        }}
-      </p>
-      <div v-for="task in taskStore.favs" :key="task.id">
+      <p>You have {{ favCount }} fav task{{ favCount == 1 ? '' : 's' }}</p>
+      <div v-for="task in favs" :key="task.id">
         <TaskDetails :task="task" />
       </div>
     </transition-group>
     <!-- End: Fav Tasks-->
+
+    <button @click="taskStore.$reset">Reset Store</button>
   </main>
 </template>
 
@@ -82,11 +77,15 @@ import { useTaskStore } from '@/stores/TaskStore';
 import TaskDetails from './components/TaskDetails.vue';
 import TaskForm from './components/TaskForm.vue';
 import Toast from './components/Toast.vue';
+import { storeToRefs } from 'pinia';
 
 export default {
   components: { TaskDetails, Toast, TaskForm },
   setup() {
     const taskStore = useTaskStore();
+
+    const { tasks, loading, favs, totalCount, favCount, allTasks } =
+      storeToRefs(taskStore);
 
     // fetch all tasks
     taskStore.getTasks();
@@ -123,6 +122,12 @@ export default {
       filter,
       handleBadValue,
       showToast,
+      tasks,
+      loading,
+      favs,
+      totalCount,
+      favCount,
+      allTasks,
       // beforeEnter,
       // enter,
     };
